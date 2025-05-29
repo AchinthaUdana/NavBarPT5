@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next-Gen Navbar</title>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .navbar-logo-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(45deg, var(--primary), #a855f7);
+            border-radius: 6px;
+        }
+        
+        .navbar-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-link {
+            position: relative;
+            color: var(--gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-link:hover {
+            color: var(--light);
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), #a855f7);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .nav-btn {
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary), #a855f7);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(99, 102, 241, 0.5);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--gray);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--light);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .menu-indicator {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), #a855f7);
+            bottom: -10px;
+            left: 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        /* Hover effect for the entire navbar */
+        .navbar:hover {
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Active link styling */
+        .nav-link.active {
+            color: var(--light);
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 1024px) {
+            .navbar-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: rgba(15, 23, 42, 0.95);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                flex-direction: column;
+                align-items: center;
+                padding: 2rem 0;
+                gap: 1.5rem;
+                transform: translateY(-150%);
+                transition: transform 0.4s ease;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            
+            .navbar-links.active {
+                transform: translateY(0);
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .menu-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#" class="navbar-logo">
+            <span class="navbar-logo-icon"></span>
+            NovaForge
+        </a>
+        
+        <div class="navbar-links">
+            <a href="#" class="nav-link active">Home</a>
+            <a href="#" class="nav-link">Features</a>
+            <a href="#" class="nav-link">Solutions</a>
+            <a href="#" class="nav-link">Pricing</a>
+            <a href="#" class="nav-link">Resources</a>
+            <div class="menu-indicator" style="width: 42px; transform: translateX(0px);"></div>
+        </div>
+        
+        <div class="navbar-actions">
+            <button class="nav-btn btn-secondary">Login</button>
+            <button class="nav-btn btn-primary">Sign Up</button>
+            <button class="mobile-menu-btn">☰</button>
+        </div>
+    </nav>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navbarLinks = document.querySelector('.navbar-links');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navbarLinks.classList.toggle('active');
+        });
+        
+        // Menu indicator animation
+        const navLinks = document.querySelectorAll('.nav-link');
+        const menuIndicator = document.querySelector('.menu-indicator');
+        
+        function moveIndicator(el) {
+            const linkRect = el.getBoundingClientRect();
+            const navbarRect = document.querySelector('.navbar').getBoundingClientRect();
+            
+            const left = linkRect.left - navbarRect.left;
+            const width = linkRect.width;
+            
+            menuIndicator.style.width = `${width}px`;
+            menuIndicator.style.transform = `translateX(${left}px)`;
+        }
+        
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                if (window.innerWidth > 1024) {
+                    moveIndicator(link);
+                }
+            });
+            
+            link.addEventListener('click', () => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                if (window.innerWidth <= 1024) {
+                    navbarLinks.classList.remove('active');
+                }
+            });
+        });
+        
+        // Initialize indicator position for active link
+        const activeLink = document.querySelector('.nav-link.active');
+        if (activeLink && window.innerWidth > 1024) {
+            moveIndicator(activeLink);
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navbarLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navbarLinks.classList.remove('active');
+            }
+        });
+        
+        // Update indicator on resize
+        window.addEventListener('resize', () => {
+            const activeLink = document.querySelector('.nav-link.active');
+            if (activeLink && window.innerWidth > 1024) {
+                moveIndicator(activeLink);
+            } else {
+                menuIndicator.style.width = '0';
+            }
+        });
+    </script>
+</body>
+</html>
